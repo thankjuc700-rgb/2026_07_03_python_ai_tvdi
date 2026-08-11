@@ -53,7 +53,7 @@ def train_and_save_model(
     ohe.fit(pd.DataFrame([["城市A"], ["城市B"], ["城市C"]], columns=["City"]))
     city_encoded = ohe.transform(data[['City']])
     city_cols = ohe.get_feature_names_out(['City'])
-    city_df = pd.DataFrame(city_encoded,columns=city_cols)
+    city_df = pd.DataFrame(city_encoded,columns=city_cols) # type: ignore
     data = pd.concat([data,city_df],axis=1).drop('City',axis=1)
     # 定義特徵欄位與目標變數
     feature_names = ['YearsExperience', 'EducationLevel', 'City_城市A', 'City_城市B', 'City_城市C']
@@ -128,6 +128,7 @@ def train_and_save_model(
         "intercept": float(intercept),
         "model_type": model_type_clean,
         "alpha": float(alpha),
+        "feature_coefs": feature_coefs,
         "train_time": float(train_time),
         "message":f"{actual_model_name} 模型訓練完成並儲存成功！"
     }
